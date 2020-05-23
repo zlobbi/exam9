@@ -16,6 +16,11 @@ import org.springframework.stereotype.Service;
 public class CommentService {
     private final CommentRepository repository;
 
+    public Page<CommentDTO> getThemeComments(Pageable pageable, String themeId) {
+        pageable = PageRequest.of(pageable.getPageNumber(), 3, Sort.by("time").descending());
+        return repository.findAllByTheme(pageable, themeId).map(CommentDTO::from);
+    }
+
     public Page<CommentDTO> getAll(Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber(), 1, Sort.by("time").descending());
         return repository.findAll(pageable).map(CommentDTO::from);

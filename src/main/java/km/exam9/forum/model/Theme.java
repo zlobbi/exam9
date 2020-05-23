@@ -1,5 +1,6 @@
 package km.exam9.forum.model;
 
+import km.exam9.forum.forms.ThemeForm;
 import km.exam9.forum.util.Generator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,5 +47,13 @@ public class Theme {
         this.comments++;
     }
 
+    public static Theme from(ThemeForm theme, User user) {
+        return builder()
+                .theme(theme.getTheme())
+                .description(theme.getDescription())
+                .time(LocalDateTime.now())
+                .user(user)
+                .build();
+    }
 
 }

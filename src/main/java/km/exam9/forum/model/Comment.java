@@ -41,4 +41,14 @@ public class Comment {
                 .time(LocalDateTime.now().minusDays(r.nextInt(20) + 1))
                 .build();
     }
+
+    public static Comment make(User u, Theme t, String comment) {
+        Random r = new Random();
+        return builder()
+                .comment(comment)
+                .user(u)
+                .theme(t)
+                .time(LocalDateTime.now())
+                .build();
+    }
 }

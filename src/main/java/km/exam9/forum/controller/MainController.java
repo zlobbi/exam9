@@ -1,5 +1,6 @@
 package km.exam9.forum.controller;
 
+import km.exam9.forum.annotations.ApiPageable;
 import km.exam9.forum.service.CommentService;
 import km.exam9.forum.service.ThemeService;
 import km.exam9.forum.service.UserService;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -19,9 +22,11 @@ import java.security.Principal;
 public class MainController {
     private final UserService userService;
     private final ThemeService themeService;
+    private final CommentService commentService;
 
     @GetMapping
-    public String root(Model model, Pageable pageable,
+    @ApiPageable
+    public String root(Model model, @ApiIgnore Pageable pageable,
                        HttpServletRequest uriBuilder, Principal principal) {
         var themes = themeService.getAll(pageable);
         var uri = uriBuilder.getRequestURI();
@@ -33,6 +38,18 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/theme/{id}")
+    public String theme(Model model, Pageable pageable, HttpServletRequest uriBuilder,
+                        @PathVariable("id") String themeId, Principal principal) {
+        model.addAttribute("theme", themeService.getById(themeId));
+        if(principal.getName() != null) {
+            model.addAttribute("user", userService.getUserByEmail(principal.getName()));
+        }
+        var uri = uriBuilder.getRequestURI();
+        var comments = commentService.getThemeComments(pageable, themeId);
+        constructPageable(comments, 4, model, uri, "comments");
+        return "theme";
+    }
 
     private static <T> void constructPageable(Page<T> list, int pageSize, Model model, String uri, String content) {
         if (list.hasNext()) {

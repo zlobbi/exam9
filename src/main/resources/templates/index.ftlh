@@ -1,6 +1,6 @@
 <#import "partials/main.ftlh" as main/>
 
-<@main.renderWith scripts=["/js/main.js"] styles=["/css/main.css"]>
+<@main.renderWith scripts=[] styles=["/css/main.css"]>
     <div class="container">
         <p id="authorized" hidden> authorized </p>
         <p id="unauthorized" hidden> unauthorized </p>

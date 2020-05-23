@@ -7,5 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 
 public interface ThemeRepository extends PagingAndSortingRepository<Theme, String> {
-
+    Page<Theme> findAllByUser(String userId, Pageable page);
 }

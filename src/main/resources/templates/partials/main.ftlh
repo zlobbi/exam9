@@ -63,6 +63,7 @@
             <#--                join-->
             <#--            </button>-->
         </div>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </header>
     <#--
     например если бы у нашего сайта было какое-то верхнее меню,

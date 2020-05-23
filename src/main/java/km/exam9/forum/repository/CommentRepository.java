@@ -7,5 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 
 public interface CommentRepository extends PagingAndSortingRepository<Comment, String> {
-
+    Page<Comment> findAllByTheme(Pageable pageable, String themeId);
 }

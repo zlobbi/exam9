@@ -2,6 +2,7 @@ package km.exam9.forum.service;
 
 import km.exam9.forum.DTO.ThemeDTO;
 import km.exam9.forum.DTO.UserDTO;
+import km.exam9.forum.forms.ThemeForm;
 import km.exam9.forum.model.Theme;
 import km.exam9.forum.model.User;
 import km.exam9.forum.repository.ThemeRepository;
@@ -31,11 +32,20 @@ public class ThemeService {
         return ThemeDTO.from(t);
     }
 
+    public void saveTheme(ThemeForm form, User user) {
+        var t = Theme.from(form, user);
+        repository.save(t);
+    }
 
     public Theme getTheme(String id) {
         var t = repository.findById(id).get();
         t.plusComent();
         repository.save(t);
         return t;
+    }
+
+    public Page<ThemeDTO> getUserThemes(UserDTO user, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), 3, Sort.by("time").descending());
+        return repository.findAllByUser(user.getId(), pageable).map(ThemeDTO::from);
     }
 }
