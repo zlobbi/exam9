@@ -1,5 +1,6 @@
 package km.exam9.forum.model;
 
+import km.exam9.forum.util.Generator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,13 +42,13 @@ public class User implements UserDetails {
     private String role = "USER";
     private int comments;
 
-//    public static User make() {
-//        return User.builder()
-//                .login(Generator.makeName().toLowerCase())
-//                .email(Generator.makeEmail())
-//                .password(new BCryptPasswordEncoder().encode(Generator.makePassword()))
-//                .build();
-//    }
+    public static User make() {
+        return User.builder()
+                .login(Generator.makeName().toLowerCase())
+                .email(Generator.makeEmail())
+                .password(new BCryptPasswordEncoder().encode(Generator.makePassword()))
+                .build();
+    }
 
     public void plusComment() {
         this.comments++;

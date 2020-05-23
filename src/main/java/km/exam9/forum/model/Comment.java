@@ -1,5 +1,6 @@
 package km.exam9.forum.model;
 
+import km.exam9.forum.util.Generator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,23 +32,13 @@ public class Comment {
     @DBRef
     private Theme theme;
 
-//    public static Comment make(User u, Theme t) {
-//        Random r = new Random();
-//        return builder()
-//                .comment(Generator.makeDescription())
-//                .user(u)
-//                .theme(t)
-//                .time(LocalDateTime.now().minusDays(r.nextInt(20) + 1))
-//                .build();
-//    }
-//
-//    public static Comment make(User u, Theme t, String comment) {
-//        Random r = new Random();
-//        return builder()
-//                .comment(comment)
-//                .user(u)
-//                .theme(t)
-//                .time(LocalDateTime.now())
-//                .build();
-//    }
+    public static Comment make(User u, Theme t) {
+        Random r = new Random();
+        return builder()
+                .comment(Generator.makeDescription())
+                .user(u)
+                .theme(t)
+                .time(LocalDateTime.now().minusDays(r.nextInt(20) + 1))
+                .build();
+    }
 }
